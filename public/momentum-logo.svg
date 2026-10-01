@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B1C2D"/>
+      <stop offset="50%" stop-color="#152E48"/>
+      <stop offset="100%" stop-color="#1E3A8A"/>
+    </linearGradient>
+
+    <!-- Metallic Gold Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="45%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FBBF24" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0B1C2D" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Circular Outer Disc -->
+  <circle cx="100" cy="100" r="96" fill="url(#bgGradient)" stroke="url(#goldGrad)" stroke-width="4.5"/>
+  <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(253, 230, 138, 0.4)" stroke-width="1.2" stroke-dasharray="3,3"/>
+
+  <!-- Radial Glow Behind Emblem -->
+  <circle cx="100" cy="100" r="65" fill="url(#glowGrad)"/>
+
+  <!-- Orbital Scientific Ring (Physics & Chemistry motif) -->
+  <ellipse cx="100" cy="100" rx="72" ry="24" fill="none" stroke="url(#goldGrad)" stroke-width="2.5" transform="rotate(-30 100 100)"/>
+  <!-- Planet / Electron particle on orbit -->
+  <circle cx="162" cy="64" r="5" fill="#FDE68A" stroke="#B45309" stroke-width="1.5"/>
+  <circle cx="38" cy="136" r="4" fill="#FDE68A"/>
+
+  <!-- Stylized Dynamic M Emblem (Momentum Vector) -->
+  <path d="M 52 144 L 52 62 L 80 110 L 100 78 L 120 110 L 148 62 L 148 144 L 132 144 L 132 94 L 114 126 L 100 104 L 86 126 L 68 94 L 68 144 Z" 
+        fill="url(#goldGrad)" 
+        filter="drop-shadow(0px 2px 5px rgba(0,0,0,0.4))"/>
+
+  <!-- Small Science Star/Compass -->
+  <polygon points="100,42 103,50 111,53 103,56 100,64 97,56 89,53 97,50" fill="#FDE68A"/>
+
+  <!-- Curved Institute Ring Text or Foundation dots -->
+  <circle cx="70" cy="166" r="2.5" fill="#FDE68A"/>
+  <circle cx="100" cy="169" r="3" fill="#F59E0B"/>
+  <circle cx="130" cy="166" r="2.5" fill="#FDE68A"/>
+</svg>

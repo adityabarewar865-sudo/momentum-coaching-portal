@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Momentum Coaching Classes - Study Notes Portal</title>
+  <!-- Google Fonts: Plus Jakarta Sans for clean, medium-sized, highly legible typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons for intuitive visuals -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+  
+  <!-- Top Notification / Announcement Bar -->
+  <div class="top-announcement">
+    <div class="container announcement-content">
+      <span class="announcement-pill"><i class="fa-solid fa-graduation-cap"></i> Verified Study Material</span>
+      <span class="announcement-text">Curated Chapter Notes for Physics, Chemistry, Biology &amp; Mathematics</span>
+      <span class="announcement-contact"><i class="fa-solid fa-phone"></i> Helpline: +91 88066 91259</span>
+    </div>
+  </div>
+
+  <!-- Header Section with Official Circular Logo and Branding -->
+  <header class="main-header">
+    <div class="container header-container">
+      <div class="brand-identity">
+        <!-- Official Circular Logo Image Integration -->
+        <img 
+          src="/momentum-logo.jpg" 
+          alt="Momentum Coaching Classes Logo" 
+          class="brand-logo-img"
+        />
+        <div class="brand-text-block">
+          <h1 class="brand-title">MOMENTUM</h1>
+          <span class="brand-subtitle">Coaching Classes</span>
+          <span class="brand-motto-tag">Goregaon &bull; Excellence in Science &amp; Maths</span>
+        </div>
+      </div>
+
+      <!-- Navigation & Session Bar (Dynamic for Auth State) -->
+      <nav class="header-nav" id="headerNav">
+        <div id="authStatusBadge" class="user-status-pill hidden">
+          <i class="fa-solid fa-user-circle"></i>
+          <span id="userStatusText">Welcome</span>
+        </div>
+        <div class="header-actions">
+          <button id="logoutBtn" class="btn btn-outline hidden" onclick="handleLogout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       SCREEN 1: SIGN IN / REGISTER SCREEN (First Screen for Non-Logged-In Users)
+       ===================================================================== -->
+  <section id="authScreen" class="auth-landing-screen">
+    <div class="container auth-screen-container">
+      
+      <!-- Welcome Intro Box -->
+      <div class="auth-welcome-banner">
+        <div class="auth-brand-badge">
+          <img src="/momentum-logo.jpg" alt="Momentum Logo" class="auth-badge-logo" />
+          <span>Official Study Notes Portal</span>
+        </div>
+        <h2 class="auth-title">Learn Today, Lead Tomorrow.</h2>
+        <p class="auth-subtitle">
+          Welcome to Momentum Coaching Classes, Goregaon. Please sign in below to unlock verified chapter notes, formula sheets, diagrams, and revision modules for Physics, Chemistry, Biology, and Mathematics.
+        </p>
+
+        <div class="auth-perks-list">
+          <div class="auth-perk-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>Direct One-Click PDF and Photo Notes download to device</span>
+          </div>
+          <div class="auth-perk-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>Official attendance recording to institute's Excel database</span>
+          </div>
+          <div class="auth-perk-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>Dedicated portals for Class 9th, 10th, 11th &amp; 12th Science</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unified Auth Card with Role Toggle -->
+      <div class="auth-card" id="authCard">
+        
+        <!-- Role Toggle Switcher: Student Portal vs Faculty / Admin Login -->
+        <div class="role-switcher-container">
+          <button 
+            type="button" 
+            id="roleStudentToggle" 
+            class="role-switch-btn active" 
+            onclick="switchAuthRole('student')"
+          >
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Student Portal</span>
+          </button>
+          <button 
+            type="button" 
+            id="roleTeacherToggle" 
+            class="role-switch-btn" 
+            onclick="switchAuthRole('teacher')"
+          >
+            <i class="fa-solid fa-chalkboard-user"></i>
+            <span>Faculty / Admin Login</span>
+          </button>
+        </div>
+
+        <!-- 1. Student Portal View (Single-Step Sign-Up & Persistent Session) -->
+        <div id="studentPortalContainer">
+          <div class="modal-form-intro">
+            <h4>Student Registration &amp; Instant Access</h4>
+            <p>Enter your details below once to instantly unlock verified study notes, formula sheets, and chapter diagrams.</p>
+          </div>
+
+          <form id="studentSignUpForm" onsubmit="handleStudentSignUp(event)">
+            <div class="modal-field">
+              <label for="studentRegName" class="form-label">
+                <span>Full Name</span>
+                <span class="required-star">*</span>
+              </label>
+              <div class="input-with-icon">
+                <i class="fa-solid fa-user input-icon"></i>
+                <input 
+                  type="text" 
+                  id="studentRegName" 
+                  class="form-control with-icon" 
+                  placeholder="e.g. Rahul Sharma" 
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="modal-field">
+              <label for="studentRegClass" class="form-label">
+                <span>Class / Standard</span>
+                <span class="required-star">*</span>
+              </label>
+              <div class="input-with-icon">
+                <i class="fa-solid fa-graduation-cap input-icon"></i>
+                <select id="studentRegClass" class="form-control with-icon" required>
+                  <option value="" disabled selected>-- Select your class --</option>
+                  <option value="Class 9th">Class 9th</option>
+                  <option value="Class 10th">Class 10th (SSC / CBSE)</option>
+                  <option value="Class 11th - Science">Class 11th - Science (JEE / NEET / State)</option>
+                  <option value="Class 12th - Science">Class 12th - Science (HSC / MHT-CET / Boards)</option>
+                  <option value="Foundation Batch">Foundation Batch</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="modal-field">
+              <label for="studentRegMobile" class="form-label">
+                <span>Mobile Number</span>
+                <span class="required-star">*</span>
+              </label>
+              <div class="input-with-icon">
+                <i class="fa-solid fa-phone input-icon"></i>
+                <input 
+                  type="tel" 
+                  id="studentRegMobile" 
+                  class="form-control with-icon" 
+                  placeholder="e.g. 9881714171" 
+                  pattern="[0-9]{10}" 
+                  title="Please enter a valid 10-digit mobile number" 
+                  required
+                >
+              </div>
+              <span class="form-hint">Your 10-digit primary mobile number for official attendance.</span>
+            </div>
+
+            <div class="modal-submit-row">
+              <button type="submit" id="studentSignUpSubmitBtn" class="btn btn-primary btn-large w-full">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                <span>Sign Up &amp; Unlock Study Notes</span>
+              </button>
+            </div>
+
+            <div id="studentRegisterFeedback" class="form-feedback hidden"></div>
+          </form>
+        </div>
+
+        <!-- 2. Faculty / Admin Login View -->
+        <div id="facultyPortalContainer" class="hidden">
+          <div class="modal-form-intro">
+            <h4>Faculty &amp; Admin Sign-In</h4>
+            <p>Access the privileged dashboard to upload PDF study notes, upload chapter diagrams, and monitor student registrations.</p>
+          </div>
+
+          <form id="teacherSignInForm" onsubmit="handleTeacherSignIn(event)">
+            <div class="modal-field">
+              <label for="teacherNameInput" class="form-label">
+                <span>Teacher / Admin Full Name</span>
+                <span class="required-star">*</span>
+              </label>
+              <div class="input-with-icon">
+                <i class="fa-solid fa-user-tie input-icon"></i>
+                <input 
+                  type="text" 
+                  id="teacherNameInput" 
+                  class="form-control with-icon" 
+                  placeholder="e.g., Prof. Rajesh Kumar" 
+                  required
+                >
+              </div>
+              <span class="form-hint">Your full name as it will appear on uploaded notes and the faculty portal.</span>
+            </div>
+
+            <div class="modal-field">
+              <label for="teacherEmailInput" class="form-label">
+                <span>Admin Username / Email ID</span>
+                <span class="required-star">*</span>
+              </label>
+              <div class="input-with-icon">
+                <i class="fa-solid fa-id-badge input-icon"></i>
+                <input 
+                  type="text" 
+                  id="teacherEmailInput" 
+                  class="form-control with-icon" 
+                  placeholder="e.g. admin@momentum.edu or admin" 
+                  required
+                >
+              </div>
+              <span class="form-hint">Official faculty username or institute email ID.</span>
+            </div>
+
+            <div class="modal-field">
+              <label for="teacherPasswordInput" class="form-label">
+                <span>Password</span>
+                <span class="required-star">*</span>
+              </label>
+              <div class="input-with-icon">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input 
+                  type="password" 
+                  id="teacherPasswordInput" 
+                  class="form-control with-icon" 
+                  placeholder="Enter administrator password" 
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="modal-submit-row">
+              <button type="submit" id="teacherSignInSubmitBtn" class="btn btn-gold btn-large w-full">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Log In to Faculty Dashboard</span>
+              </button>
+            </div>
+
+            <div id="teacherLoginFeedback" class="form-feedback hidden"></div>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       SCREEN 2: PROTECTED MAIN DASHBOARD (Directly Rendered if Logged In)
+       ===================================================================== -->
+  <div id="mainDashboardScreen" class="dashboard-screen hidden">
+    
+    <!-- Hero Welcome Section with Tagline -->
+    <section class="hero-section">
+      <div class="container hero-container">
+        <div class="hero-badge">
+          <i class="fa-solid fa-shield-halved"></i> Official Student Study Repository
+        </div>
+        <h2 class="hero-headline">Learn Today, Lead Tomorrow.</h2>
+        <p class="hero-description">
+          Access official chapter-wise handwritten notes, formula charts, practice diagrams, and quick-revision worksheets prepared by the expert faculty of Momentum Coaching Classes.
+        </p>
+
+        <!-- Quick Action Highlights -->
+        <div class="hero-highlights">
+          <div class="highlight-item" onclick="filterBySubject('Physics'); scrollToNotes();" style="cursor: pointer;">
+            <div class="highlight-icon"><i class="fa-solid fa-atom"></i></div>
+            <div class="highlight-text">
+              <strong>Physics</strong>
+              <span>Concepts &amp; Derivations</span>
+            </div>
+          </div>
+          <div class="highlight-item" onclick="filterBySubject('Chemistry'); scrollToNotes();" style="cursor: pointer;">
+            <div class="highlight-icon"><i class="fa-solid fa-flask-vial"></i></div>
+            <div class="highlight-text">
+              <strong>Chemistry</strong>
+              <span>Equations &amp; Reactions</span>
+            </div>
+          </div>
+          <div class="highlight-item" onclick="filterBySubject('Biology'); scrollToNotes();" style="cursor: pointer;">
+            <div class="highlight-icon"><i class="fa-solid fa-dna"></i></div>
+            <div class="highlight-text">
+              <strong>Biology</strong>
+              <span>Diagrams &amp; Charts</span>
+            </div>
+          </div>
+          <div class="highlight-item" onclick="filterBySubject('Mathematics'); scrollToNotes();" style="cursor: pointer;">
+            <div class="highlight-icon"><i class="fa-solid fa-square-root-variable"></i></div>
+            <div class="highlight-text">
+              <strong>Mathematics</strong>
+              <span>Formulas &amp; Shortcuts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Teacher Privileged Upload & Record Management Banner (Visible when Teacher is logged in) -->
+    <section id="teacherControlPanel" class="teacher-panel container hidden">
+      <div class="panel-header">
+        <div class="panel-header-title">
+          <span class="teacher-badge"><i class="fa-solid fa-chalkboard-user"></i> Faculty Administration</span>
+          <h3>Teacher Control &amp; Upload Hub</h3>
+          <p>Upload new chapter notes and export the live student sign-in Excel records.</p>
+        </div>
+        <div class="panel-header-actions">
+          <button class="btn btn-gold" onclick="scrollToUploadForm()">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Upload New Note
+          </button>
+          <button class="btn btn-outline" onclick="exportStudentExcel()">
+            <i class="fa-solid fa-file-excel"></i> Export Student Sign-Ins (.xlsx)
+          </button>
+          <button class="btn btn-outline" onclick="exportStudentCsv()">
+            <i class="fa-solid fa-file-csv"></i> Download CSV
+          </button>
+        </div>
+      </div>
+
+      <!-- Student Attendance Statistics Ribbon -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <span class="stat-num" id="totalNotesCount">0</span>
+          <span class="stat-label">Published Notes</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" id="totalStudentCount">0</span>
+          <span class="stat-label">Student Sign-ins (Saved to Excel)</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">4</span>
+          <span class="stat-label">Active Subjects</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Area: Notes Explorer & Teacher Upload Tab -->
+    <main class="container main-content">
+      
+      <!-- Navigation Tabs between Study Notes & Teacher Upload (if logged in) -->
+      <div class="view-tabs-bar">
+        <div class="primary-tabs">
+          <button id="notesTabBtn" class="tab-btn active" onclick="switchMainTab('notes')">
+            <i class="fa-solid fa-book-open-reader"></i>
+            <span>Study Notes Repository</span>
+          </button>
+          <button id="uploadTabBtn" class="tab-btn hidden" onclick="switchMainTab('upload')">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span>Upload Chapter Notes (Teacher)</span>
+          </button>
+          <button id="recordsTabBtn" class="tab-btn hidden" onclick="switchMainTab('records')">
+            <i class="fa-solid fa-table-list"></i>
+            <span>Student Attendance Sheet</span>
+          </button>
+        </div>
+
+        <!-- Quick Search Bar -->
+        <div class="search-box-wrapper" id="searchWrapper">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="noteSearchInput" placeholder="Search chapters, topics, or faculty..." oninput="filterNotes()">
+        </div>
+      </div>
+
+      <!-- TAB 1: Student Study Notes Dashboard -->
+      <section id="notesSection" class="content-tab-view active">
+        
+        <!-- Subject Filter Buttons -->
+        <div class="subject-filter-bar">
+          <div class="filter-label">
+            <i class="fa-solid fa-filter"></i> Select Subject:
+          </div>
+          <div class="filter-buttons">
+            <button class="filter-pill active" data-subject="all" onclick="filterBySubject('all')">
+              All Subjects
+            </button>
+            <button class="filter-pill" data-subject="Physics" onclick="filterBySubject('Physics')">
+              <i class="fa-solid fa-atom"></i> Physics
+            </button>
+            <button class="filter-pill" data-subject="Chemistry" onclick="filterBySubject('Chemistry')">
+              <i class="fa-solid fa-flask-vial"></i> Chemistry
+            </button>
+            <button class="filter-pill" data-subject="Biology" onclick="filterBySubject('Biology')">
+              <i class="fa-solid fa-dna"></i> Biology
+            </button>
+            <button class="filter-pill" data-subject="Mathematics" onclick="filterBySubject('Mathematics')">
+              <i class="fa-solid fa-square-root-variable"></i> Mathematics
+            </button>
+          </div>
+        </div>
+
+        <!-- Active Filter Status -->
+        <div class="active-filter-indicator">
+          <span id="activeFilterText">Showing all study materials across all 4 subjects</span>
+          <span id="notesCountPill" class="count-pill">0 Notes Available</span>
+        </div>
+
+        <!-- Notes Grid -->
+        <div id="notesGrid" class="notes-grid">
+          <!-- Rendered via JavaScript with airy, spacious layout cards -->
+        </div>
+
+        <!-- Empty State View -->
+        <div id="noNotesView" class="empty-state-card hidden">
+          <div class="empty-state-icon"><i class="fa-regular fa-folder-open"></i></div>
+          <h4>No Notes Found for this Selection</h4>
+          <p>No study materials match your current filter or search criteria. Please choose another subject or check back soon.</p>
+          <button class="btn btn-secondary" onclick="filterBySubject('all')">View All Subjects</button>
+        </div>
+
+      </section>
+
+      <!-- TAB 2: Teacher Upload Form (Exclusive for Logged-In Teachers) -->
+      <section id="uploadSection" class="content-tab-view hidden">
+        <div class="upload-container-card">
+          <div class="upload-card-header">
+            <div class="upload-header-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            <div>
+              <h3>Upload Chapter Study Material</h3>
+              <p>Publish chapter PDF notes or photo diagrams directly for students to view and download.</p>
+            </div>
+          </div>
+
+          <form id="noteUploadForm" onsubmit="handleNoteUpload(event)">
+            <div class="form-grid">
+              
+              <!-- Chapter Title Input -->
+              <div class="form-group full-width">
+                <label for="chapterTitle" class="form-label">
+                  <span>Chapter Name / Title</span>
+                  <span class="required-star">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="chapterTitle" 
+                  name="title" 
+                  class="form-control" 
+                  placeholder="e.g. Chapter 4: Chemical Bonding & Molecular Structure" 
+                  required
+                >
+                <span class="form-hint">Provide a descriptive, clear title so students easily locate this chapter.</span>
+              </div>
+
+              <!-- Subject Selection Dropdown -->
+              <div class="form-group half-width">
+                <label for="subjectSelect" class="form-label">
+                  <span>Subject</span>
+                  <span class="required-star">*</span>
+                </label>
+                <select id="subjectSelect" name="subject" class="form-control" required>
+                  <option value="" disabled selected>-- Choose Subject --</option>
+                  <option value="Physics">Physics</option>
+                  <option value="Chemistry">Chemistry</option>
+                  <option value="Biology">Biology</option>
+                  <option value="Mathematics">Mathematics</option>
+                </select>
+                <span class="form-hint">Categorizes the note into the student subject tabs.</span>
+              </div>
+
+              <!-- Teacher / Faculty Name -->
+              <div class="form-group half-width">
+                <label for="facultyNameInput" class="form-label">
+                  <span>Faculty / Educator Name</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="facultyNameInput" 
+                  name="teacherName" 
+                  class="form-control" 
+                  placeholder="e.g. Prof. Sharma"
+                >
+                <span class="form-hint">Displays the faculty author credit on the student card.</span>
+              </div>
+
+              <!-- File Upload Input (PDF or Photo) -->
+              <div class="form-group full-width">
+                <label class="form-label">
+                  <span>Upload Document or Photo</span>
+                  <span class="required-star">*</span>
+                </label>
+                
+                <!-- Drag and Drop / Click Area -->
+                <div class="file-dropzone" id="fileDropzone" onclick="document.getElementById('fileInput').click()">
+                  <div class="dropzone-content">
+                    <div class="dropzone-icon">
+                      <i class="fa-solid fa-file-arrow-up"></i>
+                    </div>
+                    <div class="dropzone-text">
+                      <strong>Click to choose a file</strong> or drag &amp; drop here
+                    </div>
+                    <div class="dropzone-types">
+                      Supported formats: PDF Documents (.pdf) and Image Photos (.jpg, .jpeg, .png, .webp)
+                    </div>
+                    <div id="selectedFilePreview" class="selected-file-badge hidden">
+                      <i class="fa-solid fa-check-circle"></i>
+                      <span id="selectedFileName">No file chosen</span>
+                    </div>
+                  </div>
+                  <input 
+                    type="file" 
+                    id="fileInput" 
+                    name="noteFile" 
+                    accept=".pdf,image/png,image/jpeg,image/webp" 
+                    style="display:none;" 
+                    onchange="handleFileSelect(event)" 
+                    required
+                  >
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Form Submit Action -->
+            <div class="upload-actions">
+              <button type="submit" id="submitUploadBtn" class="btn btn-primary btn-large">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Publish Study Notes</span>
+              </button>
+              <button type="button" class="btn btn-secondary" onclick="resetUploadForm()">
+                <i class="fa-solid fa-arrow-rotate-left"></i>
+                <span>Reset Fields</span>
+              </button>
+            </div>
+
+            <!-- Upload Status Indicator -->
+            <div id="uploadFeedback" class="upload-feedback hidden"></div>
+          </form>
+        </div>
+      </section>
+
+      <!-- TAB 3: Teacher Student Sign-ins Sheet View -->
+      <section id="recordsSection" class="content-tab-view hidden">
+        <div class="records-container-card">
+          <div class="records-card-header">
+            <div>
+              <div class="records-header-badge">
+                <i class="fa-solid fa-users"></i>
+                <span>Registered Students: <strong id="recordsStudentCountBadge">0</strong></span>
+              </div>
+              <h3>Student Registry &amp; Excel Database</h3>
+              <p>Every student who signs up is recorded with their Name, Class, Mobile, and Password in real-time.</p>
+            </div>
+            <div class="records-download-btns">
+              <button class="btn btn-outline-danger" onclick="confirmClearAllStudents()">
+                <i class="fa-solid fa-trash-can"></i> Clear All Data
+              </button>
+              <button class="btn btn-gold" onclick="exportStudentExcel()">
+                <i class="fa-solid fa-file-excel"></i> Export Excel (.xlsx)
+              </button>
+              <button class="btn btn-outline" onclick="exportStudentCsv()">
+                <i class="fa-solid fa-file-csv"></i> Export CSV (.csv)
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="styled-table" id="studentRecordsTable">
+              <thead>
+                <tr>
+                  <th>Login ID</th>
+                  <th>Student Name</th>
+                  <th>Class</th>
+                  <th>Mobile Number</th>
+                  <th>Password</th>
+                  <th>Registered On (IST)</th>
+                  <th style="text-align: center;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="studentRecordsBody">
+                <tr>
+                  <td colspan="7" class="table-empty">Loading recorded registry entries...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Footer & Official Contact Section -->
+  <footer class="main-footer">
+    <div class="container footer-container">
+      
+      <!-- Col 1: Institute Summary with Official Circular Logo -->
+      <div class="footer-col brand-col">
+        <div class="footer-brand">
+          <img 
+            src="/momentum-logo.jpg" 
+            alt="Momentum Logo" 
+            class="footer-logo-img" 
+          />
+          <div>
+            <h4>MOMENTUM</h4>
+            <span>Coaching Classes</span>
+          </div>
+        </div>
+        <p class="footer-tagline">
+          "Learn Today, Lead Tomorrow."
+        </p>
+        <p class="footer-text">
+          Dedicated coaching for secondary &amp; higher secondary students with comprehensive curriculum support in Physics, Chemistry, Biology, and Mathematics.
+        </p>
+      </div>
+
+      <!-- Col 2: Academic Subjects -->
+      <div class="footer-col subjects-col">
+        <h4 class="footer-heading">Subject Portals</h4>
+        <ul class="footer-links">
+          <li><a href="javascript:void(0)" onclick="filterBySubject('Physics'); scrollToNotes();"><i class="fa-solid fa-angle-right"></i> Physics Classroom Notes</a></li>
+          <li><a href="javascript:void(0)" onclick="filterBySubject('Chemistry'); scrollToNotes();"><i class="fa-solid fa-angle-right"></i> Chemistry Formula Sheets</a></li>
+          <li><a href="javascript:void(0)" onclick="filterBySubject('Biology'); scrollToNotes();"><i class="fa-solid fa-angle-right"></i> Biology Diagrammatic Charts</a></li>
+          <li><a href="javascript:void(0)" onclick="filterBySubject('Mathematics'); scrollToNotes();"><i class="fa-solid fa-angle-right"></i> Mathematics Short Techniques</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Official Institute Contact Information -->
+      <div class="footer-col contact-col">
+        <h4 class="footer-heading">Contact &amp; Location</h4>
+        <ul class="contact-list">
+          <li class="contact-item">
+            <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div class="contact-detail">
+              <strong>Official Center Address:</strong>
+              <span>Goregaon, PIN 441801</span>
+            </div>
+          </li>
+          <li class="contact-item">
+            <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+            <div class="contact-detail">
+              <strong>Admission &amp; Academic Helpline:</strong>
+              <div class="phone-numbers">
+                <a href="tel:+918806691259">+91 88066 91259</a> &bull; 
+                <a href="tel:+919881714171">+91 98817 14171</a> &bull; 
+                <a href="tel:+919168442150">+91 91684 42150</a>
+              </div>
+            </div>
+          </li>
+          <li class="contact-item">
+            <div class="contact-icon"><i class="fa-solid fa-clock"></i></div>
+            <div class="contact-detail">
+              <strong>Office Timings:</strong>
+              <span>Monday &ndash; Saturday : 8:00 AM &ndash; 7:30 PM</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom Copyright Ribbon -->
+    <div class="footer-bottom-ribbon">
+      <div class="container footer-bottom-content">
+        <span>&copy; 2026 Momentum Coaching Classes &bull; Goregaon (PIN 441801). All Rights Reserved.</span>
+        <span>Empowering Young Minds &bull; "Learn Today, Lead Tomorrow."</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Notification Toast Container -->
+  <div id="toastNotification" class="toast hidden">
+    <i id="toastIcon" class="fa-solid fa-circle-check"></i>
+    <span id="toastMessage">Success</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
